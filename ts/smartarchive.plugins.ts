@@ -1,8 +1,10 @@
 import 'typings-global'
-export let beautylog = require("beautylog");
+export import beautylog = require('beautylog')
 export let g = {
-    unzip: require("gulp-unzip"),
-};
-export let path = require("path");
-export let smartfile = require("smartfile");
-export let smartpath = require("smartpath");
+    unzip: require('gulp-unzip'),
+    remoteSrc: require('gulp-remote-src')
+}
+export import gulp = require('gulp')
+export import path = require('path')
+export import smartfile = require('smartfile')
+export import smartpath = require('smartpath')

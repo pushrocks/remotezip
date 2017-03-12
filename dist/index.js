@@ -1,32 +1,7 @@
-/// <reference path="./typings/tsd.d.ts" />
-/// <reference path="./remotezip.plugins.ts" />
-var plugins = RemotezipPlugins.init();
-var remotezip = {
-    get: function (options) {
-        if (!plugins.path.isAbsolute(options.toPath)) {
-            plugins.beautylog.error("Please supply remotezip with an absolute path");
-            return;
-        }
-        ;
-        plugins.gulp.task("remotezip", function () {
-            plugins.beautylog.log('Now trying to download and extract...');
-            var stream = plugins.g.remoteSrc(["master.zip"], {
-                base: "https://github.com/UmbrellaZone/legaldocs/archive/"
-            })
-                .pipe(plugins.g.unzip())
-                .pipe(plugins.gulp.dest(options.toPath));
-            return stream;
-        });
-        plugins.gulp.task("default", ["remotezip"], function () {
-            plugins.beautylog.success("Download complete and archive extracted");
-            if (typeof options.cb == "function") {
-                options.cb();
-            }
-            ;
-        });
-        plugins.gulp.start.apply(plugins.gulp, ['default']);
-    }
-};
-module.exports = remotezip;
-
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLDJDQUEyQztBQUMzQywrQ0FBK0M7QUFFL0MsSUFBSSxPQUFPLEdBQUcsZ0JBQWdCLENBQUMsSUFBSSxFQUFFLENBQUM7QUFFdEMsSUFBSSxTQUFTLEdBQUc7SUFDWixHQUFHLEVBQUUsVUFBUyxPQUF3QztRQUVsRCxFQUFFLENBQUMsQ0FBQyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUM7WUFDM0MsT0FBTyxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsK0NBQStDLENBQUMsQ0FBQztZQUN6RSxNQUFNLENBQUM7UUFDWCxDQUFDO1FBQ0QsQ0FBQztRQUVELE9BQU8sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRTtZQUMzQixPQUFPLENBQUMsU0FBUyxDQUFDLEdBQUcsQ0FBQyx1Q0FBdUMsQ0FBQyxDQUFDO1lBQy9ELElBQUksTUFBTSxHQUFHLE9BQU8sQ0FBQyxDQUFDLENBQUMsU0FBUyxDQUFDLENBQUMsWUFBWSxDQUFDLEVBQUU7Z0JBQ3pDLElBQUksRUFBRSxvREFBb0Q7YUFDN0QsQ0FBQztpQkFDRCxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQyxLQUFLLEVBQUUsQ0FBQztpQkFDdkIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDO1lBQzdDLE1BQU0sQ0FBQyxNQUFNLENBQUM7UUFDbEIsQ0FBQyxDQUFDLENBQUM7UUFFSCxPQUFPLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxTQUFTLEVBQUMsQ0FBQyxXQUFXLENBQUMsRUFBRTtZQUN2QyxPQUFPLENBQUMsU0FBUyxDQUFDLE9BQU8sQ0FBQyx5Q0FBeUMsQ0FBQyxDQUFDO1lBQ3JFLEVBQUUsQ0FBQSxDQUFDLE9BQU8sT0FBTyxDQUFDLEVBQUUsSUFBSSxVQUFVLENBQUMsQ0FBQSxDQUFDO2dCQUNoQyxPQUFPLENBQUMsRUFBRSxFQUFFLENBQUM7WUFDakIsQ0FBQztZQUFBLENBQUM7UUFDTixDQUFDLENBQUMsQ0FBQztRQUVILE9BQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLEtBQUssQ0FBQyxPQUFPLENBQUMsSUFBSSxFQUFFLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQztJQUN4RCxDQUFDO0NBQ0osQ0FBQztBQUNGLE1BQU0sQ0FBQyxPQUFPLEdBQUcsU0FBUyxDQUFDIiwiZmlsZSI6ImluZGV4LmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8vIDxyZWZlcmVuY2UgcGF0aD1cIi4vdHlwaW5ncy90c2QuZC50c1wiIC8+XG4vLy8gPHJlZmVyZW5jZSBwYXRoPVwiLi9yZW1vdGV6aXAucGx1Z2lucy50c1wiIC8+XG5cbnZhciBwbHVnaW5zID0gUmVtb3RlemlwUGx1Z2lucy5pbml0KCk7XG5cbnZhciByZW1vdGV6aXAgPSB7XG4gICAgZ2V0OiBmdW5jdGlvbihvcHRpb25zOntmcm9tOnN0cmluZyx0b1BhdGg6c3RyaW5nLCBjYj99KXtcblxuICAgICAgICBpZiAoIXBsdWdpbnMucGF0aC5pc0Fic29sdXRlKG9wdGlvbnMudG9QYXRoKSkgeyAvL2NoZWNrIHdldGhlciBzdXBwbGllZCBwYXRoIGlzIGFic29sdXRlXG4gICAgICAgICAgICBwbHVnaW5zLmJlYXV0eWxvZy5lcnJvcihcIlBsZWFzZSBzdXBwbHkgcmVtb3RlemlwIHdpdGggYW4gYWJzb2x1dGUgcGF0aFwiKTtcbiAgICAgICAgICAgIHJldHVybjtcbiAgICAgICAgfVxuICAgICAgICA7XG5cbiAgICAgICAgcGx1Z2lucy5ndWxwLnRhc2soXCJyZW1vdGV6aXBcIiwgZnVuY3Rpb24gKCkge1xuICAgICAgICAgICAgcGx1Z2lucy5iZWF1dHlsb2cubG9nKCdOb3cgdHJ5aW5nIHRvIGRvd25sb2FkIGFuZCBleHRyYWN0Li4uJyk7XG4gICAgICAgICAgICB2YXIgc3RyZWFtID0gcGx1Z2lucy5nLnJlbW90ZVNyYyhbXCJtYXN0ZXIuemlwXCJdLCB7XG4gICAgICAgICAgICAgICAgICAgIGJhc2U6IFwiaHR0cHM6Ly9naXRodWIuY29tL1VtYnJlbGxhWm9uZS9sZWdhbGRvY3MvYXJjaGl2ZS9cIlxuICAgICAgICAgICAgICAgIH0pXG4gICAgICAgICAgICAgICAgLnBpcGUocGx1Z2lucy5nLnVuemlwKCkpXG4gICAgICAgICAgICAgICAgLnBpcGUocGx1Z2lucy5ndWxwLmRlc3Qob3B0aW9ucy50b1BhdGgpKTtcbiAgICAgICAgICAgIHJldHVybiBzdHJlYW07XG4gICAgICAgIH0pO1xuXG4gICAgICAgIHBsdWdpbnMuZ3VscC50YXNrKFwiZGVmYXVsdFwiLFtcInJlbW90ZXppcFwiXSwgZnVuY3Rpb24oKXtcbiAgICAgICAgICAgIHBsdWdpbnMuYmVhdXR5bG9nLnN1Y2Nlc3MoXCJEb3dubG9hZCBjb21wbGV0ZSBhbmQgYXJjaGl2ZSBleHRyYWN0ZWRcIik7XG4gICAgICAgICAgICBpZih0eXBlb2Ygb3B0aW9ucy5jYiA9PSBcImZ1bmN0aW9uXCIpe1xuICAgICAgICAgICAgICAgIG9wdGlvbnMuY2IoKTtcbiAgICAgICAgICAgIH07XG4gICAgICAgIH0pO1xuXG4gICAgICAgIHBsdWdpbnMuZ3VscC5zdGFydC5hcHBseShwbHVnaW5zLmd1bHAsIFsnZGVmYXVsdCddKTtcbiAgICB9XG59O1xubW9kdWxlLmV4cG9ydHMgPSByZW1vdGV6aXA7Il0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9
+"use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(require("./smartarchive.extract"));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi90cy9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLDRDQUFzQyJ9

@@ -2,7 +2,8 @@
   "name": "smartarchive",
   "version": "1.0.3",
   "description": "work with archives",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "(npmts)",
     "testm": "(npm test) && (node test.js)"
@@ -18,11 +19,13 @@
   },
   "homepage": "https://github.com/pushrocks/smartarchive#readme",
   "dependencies": {
+    "@types/gulp": "^4.0.0",
     "beautylog": "^6.1.5",
+    "gulp": "^3.9.1",
+    "gulp-remote-src": "^0.4.2",
     "gulp-unzip": "^0.2.0",
     "smartfile": "^4.1.8",
     "smartpath": "^3.2.8"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
