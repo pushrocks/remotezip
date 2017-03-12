@@ -1,8 +1,8 @@
-/// <reference path="./typings/tsd.d.ts" />
-var remotezip = require("./index.js");
+/// <reference path="../ts/typings/main.d.ts" />
+var smartarchive = require("./index.js");
 var path = require("path");
 
-remotezip.get({
+smartarchive.get({
     from:"https://github.com/UmbrellaZone/legaldocs/archive/master.zip",
     toPath:path.resolve("./test/"),
     cb: function(){

@@ -1,5 +1,5 @@
 {
-  "name": "remotezip",
+  "name": "smartarchive",
   "version": "1.0.3",
   "description": "work with remote zip files",
   "main": "index.js",
@@ -9,22 +9,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pushrocks/remotezip.git"
+    "url": "git+https://github.com/pushrocks/smartarchive.git"
   },
-  "author": "Lossless Digital UG (haftungsbeschraenkt)",
+  "author": "Lossless GmbH",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pushrocks/remotezip/issues"
+    "url": "https://github.com/pushrocks/smartarchive/issues"
   },
-  "homepage": "https://github.com/pushrocks/remotezip#readme",
+  "homepage": "https://github.com/pushrocks/smartarchive#readme",
   "dependencies": {
-    "beautylog": "^3.1.2",
-    "gulp": "^3.9.1",
-    "gulp-remote-src": "^0.4.1",
-    "gulp-unzip": "^0.1.3",
-    "remotefile": "0.0.14"
+    "beautylog": "^6.1.5",
+    "gulp-unzip": "^0.2.0",
+    "smartfile": "^4.1.8",
+    "smartpath": "^3.2.8"
   },
   "devDependencies": {
-    "npmts": "3.5.0"
   }
 }
