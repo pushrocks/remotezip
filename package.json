@@ -2,11 +2,11 @@
   "name": "smartarchive",
   "version": "1.0.4",
   "description": "work with archives",
-  "main": "dist/index.js",
+  "main": "dist_ts/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "(npmts)",
-    "testm": "(npm test) && (node test.js)"
+    "test": "tstest test/",
+    "build": "tsbuild"
   },
   "repository": {
     "type": "git",
@@ -19,13 +19,29 @@
   },
   "homepage": "https://github.com/pushrocks/smartarchive#readme",
   "dependencies": {
-    "@types/gulp": "^4.0.0",
-    "beautylog": "^6.1.5",
-    "gulp": "^3.9.1",
-    "gulp-remote-src": "^0.4.2",
-    "gulp-unzip": "^0.2.0",
-    "smartfile": "^4.1.8",
-    "smartpath": "^3.2.8"
+    "@pushrocks/smartfile": "^7.0.9",
+    "@pushrocks/smartpath": "^4.0.1",
+    "@types/tar": "^4.0.3",
+    "tar": "^6.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@gitzone/tsbuild": "^2.1.22",
+    "@gitzone/tstest": "^1.0.28",
+    "@pushrocks/smartrequest": "^1.1.47",
+    "@pushrocks/tapbundle": "^3.2.0",
+    "tslint": "^6.1.0",
+    "tslint-config-prettier": "^1.18.0"
+  },
+  "private": false,
+  "files": [
+    "ts/**/*",
+    "ts_web/**/*",
+    "dist/**/*",
+    "dist_web/**/*",
+    "dist_ts_web/**/*",
+    "assets/**/*",
+    "cli.js",
+    "npmextra.json",
+    "readme.md"
+  ]
 }

@@ -1,7 +1,16 @@
 {
   "npmci": {
-    "globalNpmTools": [
-      "npmts"
-    ]
+    "npmGlobalTools": []
+  },
+  "gitzone": {
+    "projectType": "npm",
+    "module": {
+      "githost": "gitlab.com",
+      "gitscope": "pushrocks",
+      "gitrepo": "smartarchive",
+      "shortDescription": "work with archives",
+      "npmPackagename": "@pushrocks/smartarchive",
+      "license": "MIT"
+    }
   }
 }
