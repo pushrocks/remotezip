@@ -1,6 +1,6 @@
 {
   "name": "@pushrocks/smartarchive",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "work with archives",
   "main": "dist_ts/index.js",
   "typings": "dist_ts/index.d.ts",
