@@ -12,13 +12,10 @@ export class SmartArchive {
     const parsedPath = plugins.path.parse(urlArg);
     const uniqueFileName = plugins.smartunique.uni() + parsedPath.ext;
     const downloadPath = plugins.path.join(paths.nogitDir, uniqueFileName);
-    const downloadedArchive = (
-      await plugins.smartrequest.getBinary(
-        'https://verdaccio.lossless.one/@pushrocks%2fwebsetup/-/websetup-2.0.14.tgz'
-      )
-    ).body;
+    const downloadedArchive = (await plugins.smartrequest.getBinary(urlArg)).body;
     await plugins.smartfile.memory.toFs(downloadedArchive, downloadPath);
     await this.extractArchiveFromFilePath(downloadPath, targetDir);
+    await plugins.smartfile.fs.remove(downloadPath);
   }
 
   /**

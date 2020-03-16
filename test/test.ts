@@ -11,13 +11,15 @@ const testPlugins = {
 };
 
 const testPaths = {
-  nogitDir: testPlugins.path.join(process.cwd(), '.nogit/')
+  nogitDir: testPlugins.path.join(process.cwd(), '.nogit/'),
+  remoteDir: testPlugins.path.join(process.cwd(), '.nogit/remote')
 };
 
 import * as smartarchive from '../ts/index';
 
 tap.preTask('should prepare .nogit dir', async () => {
   await testPlugins.smartfile.fs.ensureDir(testPaths.nogitDir);
+  await testPlugins.smartfile.fs.ensureDir(testPaths.remoteDir);
 });
 
 tap.preTask('should prepare downloads', async tools => {
@@ -38,6 +40,12 @@ tap.test('should extract files on disk', async () => {
     testPlugins.path.join(testPaths.nogitDir, 'test.tgz'),
     testPlugins.path.join(testPaths.nogitDir)
   );
+});
+
+tap.test('should download a package from the registry', async () => {
+  const testSmartarchive = new smartarchive.SmartArchive();
+  await testSmartarchive.extractArchiveFromUrl('https://verdaccio.lossless.one/@pushrocks%2fsmartfile/-/smartfile-7.0.11.tgz', testPaths.remoteDir);
+  
 });
 
 tap.start();
