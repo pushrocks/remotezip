@@ -1,6 +1,6 @@
 {
   "name": "smartarchive",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "work with archives",
   "main": "dist_ts/index.js",
   "typings": "dist_ts/index.d.ts",
