@@ -12,7 +12,7 @@ const testPlugins = {
 
 const testPaths = {
   nogitDir: testPlugins.path.join(process.cwd(), '.nogit/')
-}
+};
 
 import * as smartarchive from '../ts/index';
 
@@ -22,9 +22,14 @@ tap.preTask('should prepare .nogit dir', async () => {
 
 tap.preTask('should prepare downloads', async tools => {
   const downloadedFile: Buffer = (
-    await testPlugins.smartrequest.getBinary('https://verdaccio.lossless.one/@pushrocks%2fwebsetup/-/websetup-2.0.14.tgz')
+    await testPlugins.smartrequest.getBinary(
+      'https://verdaccio.lossless.one/@pushrocks%2fwebsetup/-/websetup-2.0.14.tgz'
+    )
   ).body;
-  await testPlugins.smartfile.memory.toFs(downloadedFile, testPlugins.path.join(testPaths.nogitDir, 'test.tgz'));
+  await testPlugins.smartfile.memory.toFs(
+    downloadedFile,
+    testPlugins.path.join(testPaths.nogitDir, 'test.tgz')
+  );
 });
 
 tap.test('should extract files on disk', async () => {
