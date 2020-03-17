@@ -11,14 +11,13 @@ const testPlugins = {
 };
 
 const testPaths = {
-  nogitDir: testPlugins.path.join(process.cwd(), '.nogit/'),
-  remoteDir: testPlugins.path.join(process.cwd(), '.nogit/remote')
+  nogitDir: testPlugins.path.join(__dirname, '../.nogit/'),
+  remoteDir: testPlugins.path.join(__dirname, '../.nogit/remote')
 };
 
 import * as smartarchive from '../ts/index';
 
 tap.preTask('should prepare .nogit dir', async () => {
-  await testPlugins.smartfile.fs.ensureDir(testPaths.nogitDir);
   await testPlugins.smartfile.fs.ensureDir(testPaths.remoteDir);
 });
 
@@ -34,7 +33,7 @@ tap.preTask('should prepare downloads', async tools => {
   );
 });
 
-tap.test('should extract files on disk', async () => {
+tap.test('should extract existing files on disk', async () => {
   const testSmartarchive = new smartarchive.SmartArchive();
   await testSmartarchive.extractArchiveFromFilePath(
     testPlugins.path.join(testPaths.nogitDir, 'test.tgz'),
