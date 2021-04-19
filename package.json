@@ -5,8 +5,8 @@
   "main": "dist_ts/index.js",
   "typings": "dist_ts/index.d.ts",
   "scripts": {
-    "test": "tstest test/",
-    "build": "tsbuild"
+    "test": "(tstest test/ --web)",
+    "build": "tsbuild  --web"
   },
   "repository": {
     "type": "git",
