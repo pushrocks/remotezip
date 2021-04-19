@@ -68,7 +68,7 @@ export class SmartArchive {
       stream.resume();
     });
     extractPipeStop.on('finish', () => {
-      replaySubject.unsubscribe();
+      replaySubject.complete();
     });
     // lets run the stream
     readableStream
