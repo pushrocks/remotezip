@@ -7,12 +7,12 @@ import * as smartrequest from '@pushrocks/smartrequest';
 const testPlugins = {
   path,
   smartfile,
-  smartrequest
+  smartrequest,
 };
 
 const testPaths = {
   nogitDir: testPlugins.path.join(__dirname, '../.nogit/'),
-  remoteDir: testPlugins.path.join(__dirname, '../.nogit/remote')
+  remoteDir: testPlugins.path.join(__dirname, '../.nogit/remote'),
 };
 
 import * as smartarchive from '../ts/index';
@@ -21,7 +21,7 @@ tap.preTask('should prepare .nogit dir', async () => {
   await testPlugins.smartfile.fs.ensureDir(testPaths.remoteDir);
 });
 
-tap.preTask('should prepare downloads', async tools => {
+tap.preTask('should prepare downloads', async (tools) => {
   const downloadedFile: Buffer = (
     await testPlugins.smartrequest.getBinary(
       'https://verdaccio.lossless.one/@pushrocks%2fwebsetup/-/websetup-2.0.14.tgz'
@@ -35,7 +35,7 @@ tap.preTask('should prepare downloads', async tools => {
 
 tap.test('should extract existing files on disk', async () => {
   const testSmartarchive = new smartarchive.SmartArchive();
-  await testSmartarchive.extractArchiveFromFilePath(
+  await testSmartarchive.extractArchiveFromFilePathToFs(
     testPlugins.path.join(testPaths.nogitDir, 'test.tgz'),
     testPlugins.path.join(testPaths.nogitDir)
   );
@@ -43,8 +43,26 @@ tap.test('should extract existing files on disk', async () => {
 
 tap.test('should download a package from the registry', async () => {
   const testSmartarchive = new smartarchive.SmartArchive();
-  await testSmartarchive.extractArchiveFromUrl('https://verdaccio.lossless.one/@pushrocks%2fsmartfile/-/smartfile-7.0.11.tgz', testPaths.remoteDir);
-  
+  await testSmartarchive.extractArchiveFromUrlToFs(
+    'https://verdaccio.lossless.one/@pushrocks%2fsmartfile/-/smartfile-7.0.11.tgz',
+    testPaths.remoteDir
+  );
+});
+
+tap.test('should extract a package using tarStream', async () => {
+  const testSmartarchive = new smartarchive.SmartArchive();
+  const testTgzBuffer = (
+    await testPlugins.smartfile.Smartfile.fromFilePath(
+      testPlugins.path.join(testPaths.nogitDir, 'test.tgz')
+    )
+  ).contentBuffer;
+  const extractionFileObservable = await testSmartarchive.extractArchiveFromBufferToObservable(
+    testTgzBuffer
+  );
+  const subscription = extractionFileObservable.subscribe(file => {
+    console.log(file.path);
+    
+  });
 });
 
 tap.start();

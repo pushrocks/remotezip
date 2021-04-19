@@ -1,5 +1,6 @@
 import * as plugins from './smartarchive.plugins';
 import * as paths from './smartarchive.paths';
+import { extract } from 'tar';
 
 export class SmartArchive {
   public archiveDirectory: string;
@@ -8,13 +9,13 @@ export class SmartArchive {
   /**
    * extracts an archive from a given url
    */
-  public async extractArchiveFromUrl(urlArg: string, targetDir: string) {
+  public async extractArchiveFromUrlToFs(urlArg: string, targetDir: string) {
     const parsedPath = plugins.path.parse(urlArg);
     const uniqueFileName = plugins.smartunique.uni() + parsedPath.ext;
     const downloadPath = plugins.path.join(paths.nogitDir, uniqueFileName);
     const downloadedArchive = (await plugins.smartrequest.getBinary(urlArg)).body;
     await plugins.smartfile.memory.toFs(downloadedArchive, downloadPath);
-    await this.extractArchiveFromFilePath(downloadPath, targetDir);
+    await this.extractArchiveFromFilePathToFs(downloadPath, targetDir);
     await plugins.smartfile.fs.remove(downloadPath);
   }
 
@@ -23,16 +24,58 @@ export class SmartArchive {
    * @param filePathArg
    * @param targetDir
    */
-  public async extractArchiveFromFilePath(filePathArg: string, targetDir: string) {
+  public async extractArchiveFromFilePathToFs(filePathArg: string, targetDir: string) {
     const parsedPath = plugins.path.parse(filePathArg);
     switch (parsedPath.ext) {
       case '.tgz':
         console.log(`detected a .tgz archive`);
         await plugins.tar.extract({
           file: filePathArg,
-          cwd: targetDir
+          cwd: targetDir,
         });
         break;
     }
+  }
+
+  /**
+   * extracts to Observable
+   */
+  public async extractArchiveFromBufferToObservable(
+    bufferArg: Buffer
+  ): Promise<plugins.smartrx.rxjs.ReplaySubject<plugins.smartfile.Smartfile>> {
+    const intake = new plugins.streamfunction.Intake();
+    const replaySubject = new plugins.smartrx.rxjs.ReplaySubject<plugins.smartfile.Smartfile>();
+    const readableStream = intake.getReadableStream();
+    const extractPipeStop = plugins.tarStream.extract();
+    extractPipeStop.on('entry', (header, stream, next) => {
+      let fileBuffer: Buffer;
+      stream.on('data', (chunkArg) => {
+        if (!fileBuffer) {
+          fileBuffer = chunkArg;
+        } else {
+          fileBuffer = Buffer.concat([fileBuffer, chunkArg]);
+        }
+      });
+      stream.on('end', () => {
+        replaySubject.next(
+          new plugins.smartfile.Smartfile({
+            contentBuffer: fileBuffer,
+            path: header.name,
+          })
+        );
+        next();
+      });
+      stream.resume();
+    });
+    extractPipeStop.on('finish', () => {
+      replaySubject.unsubscribe();
+    });
+    // lets run the stream
+    readableStream
+      .pipe(plugins.gunzipMaybe())
+      .pipe(extractPipeStop);
+    intake.pushData(bufferArg);
+    intake.signalEnd();
+    return replaySubject;
   }
 }
