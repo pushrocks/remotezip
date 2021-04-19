@@ -12,6 +12,7 @@ export class SmartArchive {
   public async extractArchiveFromUrlToFs(urlArg: string, targetDir: string) {
     const parsedPath = plugins.path.parse(urlArg);
     const uniqueFileName = plugins.smartunique.uni() + parsedPath.ext;
+    plugins.smartfile.fs.ensureDir(paths.nogitDir);
     const downloadPath = plugins.path.join(paths.nogitDir, uniqueFileName);
     const downloadedArchive = (await plugins.smartrequest.getBinary(urlArg)).body;
     await plugins.smartfile.memory.toFs(downloadedArchive, downloadPath);
