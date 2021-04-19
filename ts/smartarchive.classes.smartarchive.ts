@@ -78,4 +78,15 @@ export class SmartArchive {
     intake.signalEnd();
     return replaySubject;
   }
+
+  /**
+   * extracts to Observable
+   */
+   public async extractArchiveFromUrlToObservable(
+    urlArg: string
+  ): Promise<plugins.smartrx.rxjs.ReplaySubject<plugins.smartfile.Smartfile>> {
+    const response = await plugins.smartrequest.getBinary(urlArg);
+    const replaySubject = this.extractArchiveFromBufferToObservable(response.body);
+    return replaySubject;
+  }
 }

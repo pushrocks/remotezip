@@ -49,7 +49,8 @@ tap.test('should download a package from the registry', async () => {
   );
 });
 
-tap.test('should extract a package using tarStream', async () => {
+tap.test('should extract a package using tarStream', async (tools) => {
+  const done = tools.defer();
   const testSmartarchive = new smartarchive.SmartArchive();
   const testTgzBuffer = (
     await testPlugins.smartfile.Smartfile.fromFilePath(
@@ -61,8 +62,22 @@ tap.test('should extract a package using tarStream', async () => {
   );
   const subscription = extractionFileObservable.subscribe(file => {
     console.log(file.path);
-    
   });
+  await tools.delayFor(2000);
+  done.resolve();
+  await done.promise;
+});
+
+tap.test('should extract a file from url to replaySubject', async (tools) => {
+  const done = tools.defer();
+  const testSmartarchive = new smartarchive.SmartArchive();
+  const extractionFileObservable = await testSmartarchive.extractArchiveFromUrlToObservable('https://verdaccio.lossless.one/@pushrocks%2fwebsetup/-/websetup-2.0.14.tgz');
+  const subscription = extractionFileObservable.subscribe(file => {
+    console.log(file.path);
+  });
+  await tools.delayFor(2000);
+  done.resolve();
+  await done.promise;
 });
 
 tap.start();
